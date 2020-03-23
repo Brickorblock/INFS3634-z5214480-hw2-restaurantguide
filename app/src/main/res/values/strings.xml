@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Sydney Eats</string>
+
+    <string-array name="cuisines">
+        <item>All</item>
+        <item>Cafe</item>
+        <item>Chinese</item>
+        <item>Dessert</item>
+        <item>Fusion</item>
+        <item>Italian</item>
+        <item>Japanese</item>
+        <item>Korean</item>
+        <item>Taiwanese</item>
+        <item>Western</item>
+    </string-array>
+</resources>
