@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements RestaurantAdapter
     private RecyclerView myRecyclerView;
     private RecyclerView.Adapter myAdapter;
     private RecyclerView.LayoutManager myLayoutManager;
+    private ArrayList<Restaurant> currList;
 
     public static final String KEY = "ActivityMain";
 
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements RestaurantAdapter
 
         //create adapter (using Restaurant list as dataset)
         ArrayList<Restaurant> restaurants = Restaurant.getRestaurants();
+        currList = restaurants;
         myAdapter = new RestaurantAdapter(restaurants, this);
         myRecyclerView.setAdapter(myAdapter);
 
@@ -82,8 +84,8 @@ public class MainActivity extends AppCompatActivity implements RestaurantAdapter
 
     //get restaurant rank
     private int getRank(int position){
-        //rank is just offset position by 1 (e.g. rank 1 = position 0)
-        int rank = position + 1;
+        //get rank based on each Restaurant in the currList
+        int rank = currList.get(position).getRank();
 
         return rank;
     }
@@ -124,6 +126,7 @@ public class MainActivity extends AppCompatActivity implements RestaurantAdapter
             }
         }
 
+        currList = filteredList;
         return filteredList;
     }
 
