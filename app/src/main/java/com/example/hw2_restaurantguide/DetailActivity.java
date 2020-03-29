@@ -19,7 +19,7 @@ public class DetailActivity extends AppCompatActivity {
 
         //bind fragment to activity
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.fragment_container, fragment);
+        transaction.add(R.id.scrollView, fragment);
         transaction.commit();
 
         //get intent and pass through as bundle

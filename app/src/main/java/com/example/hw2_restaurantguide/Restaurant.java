@@ -30,6 +30,7 @@ public class Restaurant {
         this.image = image;
     }
 
+    //populates list of 10 restaurants
     public static ArrayList<Restaurant> getRestaurants(){
         ArrayList<Restaurant> restaurantList = new ArrayList<>();
 
@@ -47,6 +48,7 @@ public class Restaurant {
         return restaurantList;
     }
 
+    //returns a restaurant based on rank
     public static Restaurant restaurantSearch(int rank){
         ArrayList<Restaurant> restaurantList = getRestaurants();
         Restaurant myRestaurant = null;
@@ -72,7 +74,6 @@ public class Restaurant {
         } else if (rank == 10){
             myRestaurant = restaurantList.get(9);
         }
-        // TODO: finish this
 
         return myRestaurant;
     }

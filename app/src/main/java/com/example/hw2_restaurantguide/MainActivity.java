@@ -1,17 +1,15 @@
 package com.example.hw2_restaurantguide;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -26,6 +24,7 @@ public class MainActivity extends AppCompatActivity implements RestaurantAdapter
     private RecyclerView.Adapter myAdapter;
     private RecyclerView.LayoutManager myLayoutManager;
     private ArrayList<Restaurant> currList;
+    private boolean isDualPane = false;
 
     public static final String KEY = "ActivityMain";
 
@@ -33,6 +32,12 @@ public class MainActivity extends AppCompatActivity implements RestaurantAdapter
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // check if dualpane mode
+        ConstraintLayout fragmentContainer = findViewById(R.id.fragmentContainer);
+        if (fragmentContainer != null && fragmentContainer.getVisibility() == View.VISIBLE) {
+            isDualPane = true;
+        }
 
         //set up custom toolbar
         Toolbar myToolbar = findViewById(R.id.myToolbar);
@@ -69,16 +74,38 @@ public class MainActivity extends AppCompatActivity implements RestaurantAdapter
     public void launch(int position) {
     int rank = getRank(position);
         //TODO add support for dual pane mode
-        if (true){
+        if (isDualPane == false){
             launchActivity(rank);
+        } else {
+            attachDetailFragment(rank);
         }
     }
 
+    //launches detail in a separate activity (small screens)
     private void launchActivity(int rank){
         Intent launchIntent = new Intent(this, DetailActivity.class);
         launchIntent.putExtra(KEY, rank);
 
         startActivity(launchIntent);
+
+    }
+
+    //binds detailFragment to scrollView in MainActivity (tablets)
+    private void attachDetailFragment(int rank) {
+        DetailFragment fragment = new DetailFragment();
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        if (fragment == null) {
+            transaction.add(R.id.fragmentContainer, fragment);
+        } else {
+            transaction.replace(R.id.fragmentContainer, fragment);
+        }
+        transaction.commit();
+
+        // send rank info as a bundle to fragment
+        Bundle rankBundle = new Bundle();
+        rankBundle.putInt(KEY, rank);
+        fragment.setArguments(rankBundle);
 
     }
 
@@ -129,5 +156,6 @@ public class MainActivity extends AppCompatActivity implements RestaurantAdapter
         currList = filteredList;
         return filteredList;
     }
+
 
 }
