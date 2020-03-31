@@ -76,6 +76,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.My
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Restaurant curr = mDataset.get(position);
 
+        //set fields about current restaurant
         holder.restaurantImg.setImageResource(curr.getImage());
         holder.nameText.setText(curr.getName());
         holder.costText.setText(curr.getCost());
@@ -92,6 +93,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.My
         return mDataset.size();
     }
 
+    //interface for a click listener - logic is implemented in Main
     public interface LaunchListener {
         void launch(int position);
     }

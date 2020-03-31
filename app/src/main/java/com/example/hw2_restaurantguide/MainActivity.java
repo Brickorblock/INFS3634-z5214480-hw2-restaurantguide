@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements RestaurantAdapter
     @Override
     public void launch(int position) {
     int rank = getRank(position);
-        //TODO add support for dual pane mode
+        //check which screen mode to launch in
         if (isDualPane == false){
             launchActivity(rank);
         } else {
